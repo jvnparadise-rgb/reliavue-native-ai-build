@@ -4,6 +4,7 @@ import { DataStack } from '../lib/stacks/data-stack'
 import { StorageStack } from '../lib/stacks/storage-stack'
 import { SecretsStack } from '../lib/stacks/secrets-stack'
 import { IdentityStack } from '../lib/stacks/identity-stack'
+import { ComputeStack } from '../lib/stacks/compute-stack'
 
 const app = new cdk.App()
 
@@ -31,4 +32,9 @@ new SecretsStack(app, 'ReliaVue-Secrets-dev', {
 
 new IdentityStack(app, 'ReliaVue-Identity-dev', {
   env,
+})
+
+new ComputeStack(app, 'ReliaVue-Compute-dev', {
+  env,
+  vpc: networkStack.vpc,
 })
