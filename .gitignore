@@ -26,3 +26,5 @@ cdk.out/
 # IDE
 .vscode/
 .idea/
+apps/api/*.egg-info/
+infra/cdk/cdk.context.json
