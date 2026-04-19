@@ -6,6 +6,7 @@ import { SecretsStack } from '../lib/stacks/secrets-stack'
 import { IdentityStack } from '../lib/stacks/identity-stack'
 import { ComputeStack } from '../lib/stacks/compute-stack'
 import { EdgeStack } from '../lib/stacks/edge-stack'
+import { ObservabilityStack } from '../lib/stacks/observability-stack'
 
 const app = new cdk.App()
 
@@ -43,4 +44,8 @@ new ComputeStack(app, 'ReliaVue-Compute-dev', {
 new EdgeStack(app, 'ReliaVue-Edge-dev', {
   env,
   vpc: networkStack.vpc,
+})
+
+new ObservabilityStack(app, 'ReliaVue-Observability-dev', {
+  env,
 })
