@@ -51,7 +51,7 @@ export class DataStack extends cdk.Stack {
       backupRetention: cdk.Duration.days(7),
       deletionProtection: false,
       deleteAutomatedBackups: true,
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      removalPolicy: cdk.RemovalPolicy.DESTROY, // dev default, tighten for stage/prod
     })
 
     new cdk.CfnOutput(this, 'DatabaseSecretArn', {

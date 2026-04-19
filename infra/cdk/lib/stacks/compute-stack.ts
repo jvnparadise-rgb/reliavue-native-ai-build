@@ -71,14 +71,14 @@ export class ComputeStack extends cdk.Stack {
 
     const apiRepository = new ecr.Repository(this, 'ReliaVueApiRepository', {
       repositoryName: 'reliavue-api-dev',
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
-      emptyOnDelete: true,
+      removalPolicy: cdk.RemovalPolicy.RETAIN,
+      emptyOnDelete: false,
     })
 
     const workerRepository = new ecr.Repository(this, 'ReliaVueWorkerRepository', {
       repositoryName: 'reliavue-worker-dev',
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
-      emptyOnDelete: true,
+      removalPolicy: cdk.RemovalPolicy.RETAIN,
+      emptyOnDelete: false,
     })
 
     const apiTaskDefinition = new ecs.FargateTaskDefinition(this, 'ReliaVueApiTaskDefinition', {
