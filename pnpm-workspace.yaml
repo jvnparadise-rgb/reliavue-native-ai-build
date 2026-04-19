@@ -1,0 +1,4 @@
+packages:
+  - "infra/cdk"
+  - "apps/web"
+  - "packages/*"

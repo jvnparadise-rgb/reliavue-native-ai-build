@@ -1,0 +1,19 @@
+{
+  "name": "@reliavue/cdk",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "tsc",
+    "synth": "cdk synth",
+    "deploy": "cdk deploy"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.195.0",
+    "constructs": "^10.4.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "ts-node": "^10.9.2",
+    "@types/node": "^22.15.3"
+  }
+}

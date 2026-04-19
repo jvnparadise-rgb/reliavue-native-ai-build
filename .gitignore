@@ -1,0 +1,28 @@
+# Node
+node_modules/
+dist/
+coverage/
+.pnpm-store/
+
+# Python
+__pycache__/
+.pytest_cache/
+.venv/
+*.pyc
+
+# Env
+.env
+.env.*
+
+# OS
+.DS_Store
+
+# Logs
+*.log
+
+# CDK
+cdk.out/
+
+# IDE
+.vscode/
+.idea/
