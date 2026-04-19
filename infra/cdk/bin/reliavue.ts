@@ -2,6 +2,7 @@ import * as cdk from 'aws-cdk-lib'
 import { NetworkStack } from '../lib/stacks/network-stack'
 import { DataStack } from '../lib/stacks/data-stack'
 import { StorageStack } from '../lib/stacks/storage-stack'
+import { SecretsStack } from '../lib/stacks/secrets-stack'
 
 const app = new cdk.App()
 
@@ -20,5 +21,9 @@ new DataStack(app, 'ReliaVue-Data-dev', {
 })
 
 new StorageStack(app, 'ReliaVue-Storage-dev', {
+  env,
+})
+
+new SecretsStack(app, 'ReliaVue-Secrets-dev', {
   env,
 })
