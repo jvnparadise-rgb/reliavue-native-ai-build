@@ -145,6 +145,8 @@ export class ComputeStack extends cdk.Stack {
       cluster: this.cluster,
       taskDefinition: apiTaskDefinition,
       desiredCount: 1,
+      minHealthyPercent: 100,
+      maxHealthyPercent: 200,
       assignPublicIp: false,
       securityGroups: [apiSecurityGroup],
       vpcSubnets: {
@@ -172,6 +174,8 @@ export class ComputeStack extends cdk.Stack {
       cluster: this.cluster,
       taskDefinition: this.workerTaskDefinition,
       desiredCount: 1,
+      minHealthyPercent: 100,
+      maxHealthyPercent: 200,
       assignPublicIp: false,
       securityGroups: [apiSecurityGroup],
       vpcSubnets: {
