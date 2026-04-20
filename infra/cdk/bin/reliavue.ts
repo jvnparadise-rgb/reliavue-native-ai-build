@@ -36,7 +36,7 @@ new IdentityStack(app, 'ReliaVue-Identity-dev', {
   env,
 })
 
-new ComputeStack(app, 'ReliaVue-Compute-dev', {
+const computeStack = new ComputeStack(app, 'ReliaVue-Compute-dev', {
   env,
   vpc: networkStack.vpc,
 })
@@ -44,6 +44,8 @@ new ComputeStack(app, 'ReliaVue-Compute-dev', {
 new EdgeStack(app, 'ReliaVue-Edge-dev', {
   env,
   vpc: networkStack.vpc,
+  apiService: computeStack.apiService,
+  apiSecurityGroup: computeStack.apiSecurityGroup,
 })
 
 new ObservabilityStack(app, 'ReliaVue-Observability-dev', {

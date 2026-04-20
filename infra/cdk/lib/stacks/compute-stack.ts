@@ -16,11 +16,12 @@ export class ComputeStack extends cdk.Stack {
   public readonly apiService: ecs.FargateService
   public readonly workerTaskDefinition: ecs.FargateTaskDefinition
   public readonly apiLoadBalancer: elbv2.ApplicationLoadBalancer
+  public readonly apiSecurityGroup: ec2.SecurityGroup
 
   constructor(scope: Construct, id: string, props: ComputeStackProps) {
     super(scope, id, props)
 
-    const apiSecurityGroup = new ec2.SecurityGroup(this, 'ReliaVueApiSecurityGroup', {
+    this.apiSecurityGroup = new ec2.SecurityGroup(this, 'ReliaVueApiSecurityGroup', {
       vpc: props.vpc,
       allowAllOutbound: true,
       description: 'Security group for ReliaVue API service',
@@ -32,7 +33,7 @@ export class ComputeStack extends cdk.Stack {
       description: 'Security group for ReliaVue internal ALB',
     })
 
-    apiSecurityGroup.addIngressRule(
+    this.apiSecurityGroup.addIngressRule(
       albSecurityGroup,
       ec2.Port.tcp(8000),
       'Allow ALB to reach API container'
@@ -148,7 +149,7 @@ export class ComputeStack extends cdk.Stack {
       minHealthyPercent: 100,
       maxHealthyPercent: 200,
       assignPublicIp: false,
-      securityGroups: [apiSecurityGroup],
+      securityGroups: [this.apiSecurityGroup],
       vpcSubnets: {
         subnetGroupName: 'app',
       },
@@ -177,7 +178,7 @@ export class ComputeStack extends cdk.Stack {
       minHealthyPercent: 100,
       maxHealthyPercent: 200,
       assignPublicIp: false,
-      securityGroups: [apiSecurityGroup],
+      securityGroups: [this.apiSecurityGroup],
       vpcSubnets: {
         subnetGroupName: 'app',
       },
