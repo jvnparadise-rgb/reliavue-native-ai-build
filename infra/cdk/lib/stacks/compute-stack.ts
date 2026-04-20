@@ -6,6 +6,7 @@ import * as ecr from 'aws-cdk-lib/aws-ecr'
 import * as elbv2 from 'aws-cdk-lib/aws-elasticloadbalancingv2'
 import * as logs from 'aws-cdk-lib/aws-logs'
 import * as iam from 'aws-cdk-lib/aws-iam'
+import * as secretsmanager from 'aws-cdk-lib/aws-secretsmanager'
 
 export interface ComputeStackProps extends cdk.StackProps {
   vpc: ec2.IVpc
@@ -45,6 +46,12 @@ export class ComputeStack extends cdk.Stack {
       containerInsightsV2: ecs.ContainerInsights.ENABLED,
     })
 
+    const dbSecret = secretsmanager.Secret.fromSecretCompleteArn(
+      this,
+      'ReliaVueDbSecret',
+      'arn:aws:secretsmanager:us-east-1:479831563288:secret:ReliaVueDatadevReliaVuePost-9jIupc5WfAjj-oB6ZDB'
+    )
+
     const apiLogGroup = new logs.LogGroup(this, 'ReliaVueApiLogGroup', {
       logGroupName: '/reliavue/dev/api',
       retention: logs.RetentionDays.ONE_MONTH,
@@ -65,6 +72,8 @@ export class ComputeStack extends cdk.Stack {
         ),
       ],
     })
+
+    dbSecret.grantRead(executionRole)
 
     const taskRole = new iam.Role(this, 'ReliaVueTaskRole', {
       assumedBy: new iam.ServicePrincipal('ecs-tasks.amazonaws.com'),
@@ -99,6 +108,13 @@ export class ComputeStack extends cdk.Stack {
       environment: {
         APP_NAME: 'ReliaVue API',
         ENVIRONMENT: 'dev',
+      },
+      secrets: {
+        DB_HOST: ecs.Secret.fromSecretsManager(dbSecret, 'host'),
+        DB_PORT: ecs.Secret.fromSecretsManager(dbSecret, 'port'),
+        DB_NAME: ecs.Secret.fromSecretsManager(dbSecret, 'dbname'),
+        DB_USER: ecs.Secret.fromSecretsManager(dbSecret, 'username'),
+        DB_PASSWORD: ecs.Secret.fromSecretsManager(dbSecret, 'password'),
       },
       portMappings: [
         {
